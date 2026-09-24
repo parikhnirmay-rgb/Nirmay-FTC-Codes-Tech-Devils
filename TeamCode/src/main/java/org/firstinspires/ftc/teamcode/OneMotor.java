@@ -12,22 +12,21 @@ public class OneMotor extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        // 2. Map your hardware (the string "left_drive" must match your REV Hub config)
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        // 1. THIS MUST HAPPEN FIRST: Map the motor hardware name
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
 
+        // 2. Initialize your telemetry screens
         telemetry.addData("Status", "Initialized Successfully!");
         telemetry.update();
 
-        // Wait for the game to start (driver presses PLAY on the Driver Station)
+        // 3. Wait for the game to start (Driver presses PLAY)
         waitForStart();
 
-        // 3. This loop runs continuously until the driver presses STOP
+        // 4. Your main operational loop
         while (opModeIsActive()) {
-            // Push stick forward to go forward, pull back to go backward
             double power = -gamepad1.left_stick_y;
             leftDrive.setPower(power);
 
-            // Send live data back to your controller screen
             telemetry.addData("Motor Power", power);
             telemetry.update();
         }
