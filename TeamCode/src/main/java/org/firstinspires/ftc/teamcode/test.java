@@ -44,10 +44,10 @@ public class test extends LinearOpMode {
 
             // Y button moves robot forward at 20% power
             if (gamepad1.y) {
-                leftFrontPower = 0.2;
-                leftRearPower = 0.2;
-                rightFrontPower = 0.2;
-                rightRearPower = 0.2;
+                leftFrontPower = 0.21;
+                leftRearPower = 0.25; // G
+                rightFrontPower = 0.26; // G
+                rightRearPower = 0.24;
             }
 
             // Send power to motors
