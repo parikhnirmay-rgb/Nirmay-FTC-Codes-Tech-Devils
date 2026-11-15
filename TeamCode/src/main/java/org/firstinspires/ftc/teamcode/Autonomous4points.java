@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -71,6 +72,21 @@ public class Autonomous4points extends LinearOpMode {
     // Current distance
     private double distance = 0;
     private double remaining = DISTANCE_MM;
+    private static final int CENTER_X = 160;
+    private static final int CENTER_Y = 120;
+
+    // Allow a little error around the center of the image.
+    private static final int CENTER_TOLERANCE = 15;
+
+    // Ignore tiny width changes caused by detection jitter.
+    private static final int WIDTH_CHANGE_THRESHOLD = 2;
+
+    // Rough shape thresholds, not precise angle measurements.
+    private static final double NARROW_RATIO = 0.75;
+    private static final double TALL_RATIO = 1.33;
+    private static final double CALIBRATION_WIDTH_PIXELS = 76.0;
+    private static final double CALIBRATION_DISTANCE_MM = 300.0;
+
 
     @Override
     public void runOpMode() {
