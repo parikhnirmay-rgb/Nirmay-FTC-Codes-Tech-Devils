@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Autonomous(name = "Strafe To AprilTag", group = "Autonomous")
-public class GoToAprilTagDiagonal extends LinearOpMode {
+public class GoToAprilTagStrafe extends LinearOpMode {
 
     private DcMotor leftFront;
     private DcMotor leftRear;
