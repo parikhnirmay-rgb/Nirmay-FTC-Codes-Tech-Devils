@@ -16,13 +16,13 @@ public class AllThings extends LinearOpMode {
     private DcMotor leftFront, leftRear, rightFront, rightRear;
     private GoBildaPinpointDriver pinpoint;
 
-    // Your calibrated straight motor powers
-    private static final double LF = 0.16;
-    private static final double LR = 0.15;
-    private static final double RF = 0.26;
-    private static final double RR = 0.27;
+    // Calibrated straight motor powers
+    private static final double LF = -0.2;
+    private static final double LR = 0.2;
+    private static final double RF = -0.2;
+    private static final double RR = 0.2;
 
-    // Sideways power (initial calibration)
+    // Sideways power
     private static final double STRAFE_POWER = 0.25;
 
     // Turning settings
@@ -74,6 +74,8 @@ public class AllThings extends LinearOpMode {
 
         waitForStart();
 
+        if (isStopRequested()) return;
+
         try {
             while (opModeIsActive()) {
 
@@ -87,9 +89,7 @@ public class AllThings extends LinearOpMode {
                 double error = 0;
                 double turn = 0;
 
-                // ==============================
                 // FORWARD
-                // ==============================
                 if (gamepad1.y) {
 
                     leftFront.setPower(LF);
@@ -99,9 +99,7 @@ public class AllThings extends LinearOpMode {
 
                 }
 
-                // ==============================
                 // BACKWARD
-                // ==============================
                 else if (gamepad1.a) {
 
                     leftFront.setPower(-LF);
@@ -111,9 +109,7 @@ public class AllThings extends LinearOpMode {
 
                 }
 
-                // ==============================
-                // STRAFE LEFT
-                // ==============================
+                // TURN TO HEADING
                 else if (gamepad1.x) {
 
                     leftFront.setPower(-STRAFE_POWER);
@@ -123,9 +119,7 @@ public class AllThings extends LinearOpMode {
 
                 }
 
-                // ==============================
-                // STRAFE RIGHT
-                // ==============================
+                // TURN TO HEADING
                 else if (gamepad1.b) {
 
                     leftFront.setPower(STRAFE_POWER);
@@ -135,9 +129,7 @@ public class AllThings extends LinearOpMode {
 
                 }
 
-                // ==============================
-                // TURN TO SPECIFIC HEADING
-                // ==============================
+
                 else if (gamepad1.dpad_left ||
                         gamepad1.dpad_right ||
                         gamepad1.dpad_up) {
@@ -157,6 +149,7 @@ public class AllThings extends LinearOpMode {
                     while (error < -180) error += 360;
 
                     if (Math.abs(error) <= TURN_TOLERANCE) {
+
                         stopMotors();
 
                     } else {
@@ -177,23 +170,21 @@ public class AllThings extends LinearOpMode {
                     }
                 }
 
-                // ==============================
                 // NO BUTTON
-                // ==============================
                 else {
                     stopMotors();
                 }
 
-                // ==============================
                 // TELEMETRY
-                // ==============================
                 telemetry.addData("Heading", "%.2f", heading);
                 telemetry.addData("Target Heading", "%.2f", targetHeading);
                 telemetry.addData("Turn Error", "%.2f", error);
+
                 telemetry.addData(
                         "X (mm)", "%.1f",
                         position.getX(DistanceUnit.MM)
                 );
+
                 telemetry.addData(
                         "Y (mm)", "%.1f",
                         position.getY(DistanceUnit.MM)
